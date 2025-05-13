@@ -1,57 +1,55 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
-public class sidebar extends JPanel {
+public class  Sidebar extends JPanel {
+    private List<SidebarButton> buttons;
+    private SidebarButtonListener listener;
 
-    public sidebar() {
+    public Sidebar(SidebarButtonListener listener) {
+        this.listener = listener;
+        this.buttons = new ArrayList<>();
+        initializeUI();
+    }
+
+    private void initializeUI() {
         setBackground(new Color(50, 50, 50));
         setPreferredSize(new Dimension(200, 600));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        JButton Home = new JButton("Home");
-        JButton Characters = new JButton("Characters");
-        JButton TierList = new JButton("Tier List");
-        JButton MOC = new JButton("MOC");
-        JButton LC = new JButton("LC");
-        JButton Relic = new JButton("Relic");
-        JButton Guides = new JButton("Guides");
-        JButton Tools = new JButton("Tools");
-
-        styleButton(Home);
-        styleButton(Characters);
-        styleButton(TierList);
-        styleButton(MOC);
-        styleButton(LC);
-        styleButton(Relic);
-        styleButton(Guides);
-        styleButton(Tools);
-
-
-        add(Box.createVerticalStrut(10));
-        add(Home);
-        add(Box.createVerticalStrut(10));
-        add(Characters);
-        add(Box.createVerticalStrut(10));
-        add(TierList);
-        add(Box.createVerticalStrut(10));
-        add(MOC);
-        add(Box.createVerticalStrut(10));
-        add(LC);
-        add(Box.createVerticalStrut(10));
-        add(Relic);
-        add(Box.createVerticalStrut(10));
-        add(Guides);
-        add(Box.createVerticalStrut(10));
-        add(Tools);
+        createButtons();
+        addButtonsToPanel();
     }
 
+    private void createButtons() {
+        buttons.add(new SidebarButton("Home", this::handleButtonClick));
+        buttons.add(new SidebarButton("Characters", this::handleButtonClick));
+        buttons.add(new SidebarButton("Tier List", this::handleButtonClick));
+        buttons.add(new SidebarButton("MOC", this::handleButtonClick));
+        buttons.add(new SidebarButton("LC", this::handleButtonClick));
+        buttons.add(new SidebarButton("Relic", this::handleButtonClick));
+        buttons.add(new SidebarButton("Guides", this::handleButtonClick));
+        buttons.add(new SidebarButton("Tools", this::handleButtonClick));
+    }
 
-    private void styleButton(JButton button) {
-        button.setForeground(Color.WHITE);
-        button.setBackground(new Color(70, 70, 70));
-        button.setFocusPainted(false);
-        button.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        button.setMaximumSize(new Dimension(180, 40));
+    private void addButtonsToPanel() {
+        add(Box.createVerticalStrut(10));
+        for (SidebarButton button : buttons) {
+            add(button);
+            add(Box.createVerticalStrut(10));
+        }
+    }
+
+    private void handleButtonClick(ActionEvent e) {
+        SidebarButton button = (SidebarButton) e.getSource();
+        if (listener != null) {
+            listener.buttonClicked(button.getButtonName());
+        }
+    }
+
+    public interface SidebarButtonListener {
+        void buttonClicked(String buttonName);
     }
 }

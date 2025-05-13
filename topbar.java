@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class topbar extends JPanel {
-    public topbar() {
+public class Topbar extends JPanel {
+    public Topbar() {
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(200,45));
         setLayout(new BorderLayout());
@@ -11,9 +11,9 @@ public class topbar extends JPanel {
         leftPanel.setBackground(Color.BLACK);
         leftPanel.setOpaque(false);
         
-        JLabel titleLabel = new JLabel("HSR chara");
-        titleLabel.setForeground(Color.WHITE);
-        titleLabel.setFont(new Font("TIMES NEW ROMAN", Font.BOLD, 12));
+        JLabel CHARA = new JLabel("HSR chara");
+        CHARA.setForeground(Color.WHITE);
+        CHARA.setFont(new Font("TIMES NEW ROMAN", Font.BOLD, 15));
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10 , -5));
         buttonPanel.setBackground(Color.BLACK);
@@ -31,6 +31,7 @@ public class topbar extends JPanel {
                // Add buttons to button panel (instead of directly to TopBar)
                buttonPanel.add(discord);
                buttonPanel.add(KOfi);
+               add(CHARA);
                
                // Add both panels to the main TopBar
                add(leftPanel, BorderLayout.WEST);
